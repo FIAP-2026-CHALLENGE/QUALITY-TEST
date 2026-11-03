@@ -9,7 +9,7 @@ Este repositório reúne a evidência da **automação de testes** da API
 | Item | Link |
 |---|---|
 | Azure Boards (testes manuais) | https://dev.azure.com/RM562145/FIAP-CHALLENGE |
-| Plano de testes no Azure Test Plans | https://dev.azure.com/RM562145/FIAP-CHALLENGE/_testPlans/define?planId=370 |
+| Plano de testes no Azure Test Plans | https://dev.azure.com/RM562145/FIAP-CHALLENGE/_testPlans/charts?planId=369&suiteId=396 |
 | Vídeo da automação | https://youtu.be/qYgEmJ8LAYE_AQUI |
 
 ## Testes automatizados (Postman)
