@@ -29,3 +29,12 @@ A coleção está em `postman/FIAP-QA-API-Testes.postman_collection.json`.
 Plano com 23 casos de teste executados: 100% Passed.
 
 <img width="999" height="384" alt="image" src="https://github.com/user-attachments/assets/a35c515b-12bf-4918-a174-3d8a31fe4c55" />
+
+## Resultados dos testes automatizados (Postman)
+
+Execução da coleção no Collection Runner: 4 requisições, 8 testes aprovados, 0 falhas.
+
+<img width="1357" height="660" alt="image" src="https://github.com/user-attachments/assets/0898e26d-9a04-4f1d-8f6f-65f35cda177a" />
+
+
+
