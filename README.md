@@ -16,6 +16,13 @@ Este repositório reúne a evidência da **automação de testes** da API
 
 A coleção está em `postman/FIAP-QA-API-Testes.postman_collection.json`.
 
+## Resultados dos testes manuais (Azure Test Plans)
+
+Plano com 23 casos de teste executados: 100% Passed.
+
+<img width="999" height="384" alt="image" src="https://github.com/user-attachments/assets/a35c515b-12bf-4918-a174-3d8a31fe4c55" />
+
+
 | # | Teste | Entrada | Saída esperada |
 |---|---|---|---|
 | 1 | Login válido | usuário e senha corretos | 200 e `accessToken` |
