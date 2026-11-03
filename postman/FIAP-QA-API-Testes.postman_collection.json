@@ -1,0 +1,202 @@
+{
+  "info": {
+    "_postman_id": "72d60e16-ea8e-4643-9f7c-9d1d2dc7c1f4",
+    "name": "FIAP QA - API Testes Automatizados",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "59430051",
+    "_collection_link": "https://go.postman.co/collection/59430051-72d60e16-ea8e-4643-9f7c-9d1d2dc7c1f4?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "[200] Login válido",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "  pm.test(\"Status é 200\", function () {\r\n       pm.response.to.have.status(200);\r\n   });\r\n   \r\n   pm.test(\"Resposta traz o token\", function () {\r\n       const corpo = pm.response.json();\r\n       pm.expect(corpo.accessToken).to.be.a(\"string\").and.not.empty;\r\n       pm.collectionVariables.set(\"token\", corpo.accessToken);\r\n   });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "   {\"usuario\":\"qa.teste\",\"senha\":\"Teste@12345\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/login",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "[401] Login com senha incorreta",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "   pm.test(\"Status é 401\", function () {\r\n       pm.response.to.have.status(401);\r\n   });\r\n\r\n   pm.test(\"Resposta é ProblemDetails de não autorizado\", function () {\r\n       const corpo = pm.response.json();\r\n       pm.expect(corpo.status).to.eql(401);\r\n       pm.expect(corpo.title).to.eql(\"Não autorizado\");\r\n   });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "   {\"usuario\":\"qa.teste\",\"senha\":\"senha-incorreta\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/login",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "[401] Listagem de animais sem token",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "   pm.test(\"Status é 401\", function () {\r\n       pm.response.to.have.status(401);\r\n   });\r\n\r\n   pm.test(\"Não expõe dados de animais\", function () {\r\n       pm.expect(pm.response.text()).to.not.match(/rga/i);\r\n   });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/animais",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "animais"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "[201] Cadastro de responsável com token",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "   const cpf = String(Math.floor(Math.random() * 1e11)).padStart(11, \"0\");\r\n   pm.collectionVariables.set(\"cpfTeste\", cpf);\r\n   pm.collectionVariables.set(\"emailTeste\", \"qa.\" + cpf + \"@email.com\");"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "   pm.test(\"Status é 201\", function () {\r\n       pm.response.to.have.status(201);\r\n   });\r\n\r\n   pm.test(\"Responsável criado com id e CPF enviado\", function () {\r\n       const corpo = pm.response.json();\r\n       pm.expect(corpo.id).to.be.a(\"number\");\r\n       pm.expect(corpo.cpf).to.eql(pm.collectionVariables.get(\"cpfTeste\"));\r\n   });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "   {\r\n     \"name\": \"Responsável QA Automatizado\",\r\n     \"email\": \"{{emailTeste}}\",\r\n     \"phone\": \"11977776666\",\r\n     \"cpf\": \"{{cpfTeste}}\"\r\n   }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/responsaveis",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "responsaveis"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5296"
+    },
+    {
+      "key": "token",
+      "value": ""
+    },
+    {
+      "key": "cpfTeste",
+      "value": ""
+    },
+    {
+      "key": "emailTeste",
+      "value": ""
+    }
+  ]
+}
